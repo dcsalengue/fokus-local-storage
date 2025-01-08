@@ -56,7 +56,7 @@ function criarElementoTarefa(tarefa) {
     }
 
     const imagemBotao = document.createElement('img');
-    imagemBotao.setAttribute('src', '/imagens/edit.png');
+    imagemBotao.setAttribute('src', './imagens/edit.png');
 
     botao.append(imagemBotao);
 
@@ -174,7 +174,7 @@ btnRemoverTodas.onclick = () => removerTarefas();
         Estudando localStorage
     </p>
     <button class="app_button-edit">
-        <img src="/imagens/edit.png">
+        <img src="./imagens/edit.png">
     </button>
 </li>
 */
