@@ -11,9 +11,14 @@ const textarea = document.querySelector('.app__form-textarea')
 
 const ulTarefas = document.querySelector('.app__section-task-list');
 
+const btnCancelarTarefa = document.querySelector('.app__form-footer__button--cancel')
+
 // Esta é a nossa lista (ou array) de tarefas. Ela começa vazia porque ainda não adicionamos nenhuma tarefa.
 const tarefas = JSON.parse(localStorage.getItem('tarefas')) || [];
 
+function atualizarTarefas() {
+    localStorage.setItem('tarefas', JSON.stringify(tarefas));
+}
 
 function criarElementoTarefa(tarefa) {
     const li = document.createElement('li');
@@ -32,6 +37,16 @@ function criarElementoTarefa(tarefa) {
 
     const botao = document.createElement('button');
     botao.classList.add('app_button-edit');
+    botao.onclick = () => {
+        debugger
+        const novaDescricao = prompt("Qual é o novo nome da tarefa?");
+        console.log(`Nova descrição da tarefa: ${novaDescricao}`)
+        if (novaDescricao) {
+            paragrafo.textContent = novaDescricao;
+            tarefa.descricao = novaDescricao;
+            atualizarTarefas();
+        }
+    }
 
     const imagemBotao = document.createElement('img');
     imagemBotao.setAttribute('src', '/imagens/edit.png');
@@ -68,11 +83,9 @@ formAdicionarTarefa.addEventListener('submit', (evento) => {
     ulTarefas.append(elementoTarefa);
 
     // E, finalmente, armazenamos nossa lista de tarefas no localStorage. 
-    // Convertendo o array para uma string em formato JSON para poder armazenar.
-    localStorage.setItem('tarefas', JSON.stringify(tarefas));
-
-    textarea.value = '';
-    formAdicionarTarefa.classList.add('hidden')
+    // Convertendo o array para uma string em formato JSON para poder armazenar.    
+    atualizarTarefas();
+    limparFormulario();
 });
 
 // Para preencher a lista de tarefas existentes na inicialização
@@ -82,7 +95,12 @@ tarefas.forEach(tarefa => {
     ulTarefas.append(elementoTarefa);
 });
 
+const limparFormulario = () => {
+    textarea.value = '';
+    formAdicionarTarefa.classList.add('hidden');
+}
 
+btnCancelarTarefa.addEventListener('click' , limparFormulario);
 
 
 
